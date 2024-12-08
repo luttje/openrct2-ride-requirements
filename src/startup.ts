@@ -1,20 +1,11 @@
-function onClickMenuItem()
-{
-	// Write code here that should happen when the player clicks the menu item under the map icon.
+import { rideRequirementsWindow } from './ui/ride-requirements-window';
 
-	console.log("Hello world!");
+function onClickMenuItem() {
+  rideRequirementsWindow.open();
 }
 
-
-export function startup()
-{
-	// Write code here that should happen on startup of the plugin.
-
-
-
-	// Register a menu item under the map icon:
-	if (typeof ui !== "undefined")
-	{
-		ui.registerMenuItem("My plugin", () => onClickMenuItem());
-	}
+export function startup() {
+  if (typeof ui !== 'undefined') {
+    ui.registerMenuItem('Show Ride Requirements', () => onClickMenuItem());
+  }
 }

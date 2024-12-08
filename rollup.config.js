@@ -8,10 +8,7 @@ import { promisify } from "util";
 
 const options =
 {
-	/**
-	 * Change the file name of the output file here.
-	 */
-	filename: "my-plugin.js",
+	filename: "ride-requirements.js",
 
 	/**
 	 * Determines in what build mode the plugin should be build. The default here takes
