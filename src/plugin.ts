@@ -8,6 +8,6 @@ registerPlugin({
   authors: ['luttje'],
   type: 'remote',
   licence: 'MIT',
-  targetApiVersion: 103,
+  targetApiVersion: 104,
   main: startup,
 });

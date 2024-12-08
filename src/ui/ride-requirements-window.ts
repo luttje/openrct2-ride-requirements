@@ -1,10 +1,10 @@
-import { compute, dropdownSpinner, groupbox, label, vertical, window } from 'openrct2-flexui';
+import { compute, dropdownSpinner, groupbox, listview, vertical, window } from 'openrct2-flexui';
 import { RideRequirementsViewModel } from './ride-requirements-viewmodel';
 
 const viewModel = new RideRequirementsViewModel();
 
 export const rideRequirementsWindow = window({
-  title: 'Ride Requirements',
+  title: 'Bonus and Requirement Viewer',
   width: 400,
   height: 300,
   spacing: 5,
@@ -23,11 +23,19 @@ export const rideRequirementsWindow = window({
       ]
     }),
     groupbox({
-      text: 'Ratings Data',
+      text: 'Ratings Modifiers',
       content: [
         vertical([
-          // TODO
-          label({ text: 'No ratings available.', alignment: 'centred' })
+          listview({
+            columns: [
+              { header: 'Rating', width: 100 },
+              { header: 'Threshold' },
+              { header: 'Excitement' },
+              { header: 'Intensity' },
+              { header: 'Nausea' },
+            ],
+            items: viewModel.selectedRideRatingsItems,
+          }),
         ])
       ]
     })
