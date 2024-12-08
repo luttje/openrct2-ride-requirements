@@ -38,6 +38,6 @@ export const rideRequirementsWindow = window({
           }),
         ])
       ]
-    })
+    }),
   ]
 });

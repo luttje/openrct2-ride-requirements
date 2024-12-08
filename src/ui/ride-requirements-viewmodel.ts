@@ -1,16 +1,16 @@
 import { store, WritableStore } from 'openrct2-flexui';
-import { getAllRides, ratingsModifierToString } from '../objects/rides';
+import { getAllRides } from '../objects/rides';
+import { enumKeyFromValue } from '../objects/enum';
 
 export class RideRequirementsViewModel {
   readonly selectedRide = store<[Ride, number] | null>(null);
   readonly rides = store<Ride[]>([]);
   readonly selectedRideRatingsItems = store<ListViewItem[]>([]);
+  readonly selectedRideModeItems = store<ListViewItem[]>([]);
 
   constructor() {
-    this.rides.subscribe(r => {
-      updateSelectionOrNull(this.selectedRide, r)
-      this.updateSelectedRideRatings();
-    });
+    this.rides.subscribe(r =>updateSelectionOrNull(this.selectedRide, r));
+    this.selectedRide.subscribe(() => this.updateSelectedRideRatings());
   }
 
   /**
@@ -27,7 +27,7 @@ export class RideRequirementsViewModel {
   }
 
   /**
-   * Updates the selected ride ratings list view items.
+   * Updates the selected ride its ratings list view items.
    */
   updateSelectedRideRatings(): void {
     const selectedRide = this.selectedRide.get();
@@ -37,13 +37,14 @@ export class RideRequirementsViewModel {
       return;
     }
 
-    const ratingModifiers = selectedRide[0].rideTypeDescriptor.ratingsData.modifiers;
+    const typeDescriptor = selectedRide[0].rideTypeDescriptor;
+    const ratingModifiers = typeDescriptor.ratingsData.modifiers;
     const newItems = Array<ListViewItem>(ratingModifiers.length);
 
     for (let i = 0; i < ratingModifiers.length; i++) {
       const modifier = ratingModifiers[i];
       const row = Array<string>(5);
-      row[0] = ratingsModifierToString(modifier.type);
+      row[0] = enumKeyFromValue(RatingsModifierType, modifier.type);
       row[1] = modifier.threshold.toString();
       row[2] = modifier.excitement.toString();
       row[3] = modifier.intensity.toString();
